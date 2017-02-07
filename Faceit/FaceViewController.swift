@@ -10,18 +10,21 @@ import UIKit
 
 class FaceViewController: UIViewController
 {
-    var expression = FacialExpresion (eyes: .Close, eyeBrows: .Relaxed, mouth: .Smile) {
+    // MARK: Model
+    var expression = FacialExpression (eyes: .Closed, eyeBrows: .Relaxed, mouth: .Smile) {
         didSet {
-            updateUI()
+            updateUI() // Model changed, so update the view
         }
     }
     
+    // MARK: View
     @IBOutlet weak var faceView: FaceView! {
         didSet {
             faceView.addGestureRecognizer(UIPinchGestureRecognizer(
                 target: faceView, action: #selector(FaceView.changeScale(_:))
                 ))
-            let happierSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(FaceViewController.increaseHappiness)
+            let happierSwipeGestureRecognizer = UISwipeGestureRecognizer(
+                target: self, action: #selector(FaceViewController.increaseHappiness)
             )
             happierSwipeGestureRecognizer.direction = .Up
             faceView.addGestureRecognizer(happierSwipeGestureRecognizer)
@@ -31,19 +34,30 @@ class FaceViewController: UIViewController
             sadderSwipeGestureRecognizer.direction = .Down
             faceView.addGestureRecognizer(sadderSwipeGestureRecognizer)
             
+            faceView.addGestureRecognizer(UIRotationGestureRecognizer(
+                target: self, action: #selector(FaceViewController.changeBrows(_:))
+                ))
+            
             updateUI()
         }
     }
     
-    @IBAction func toggleEyes(recognizer: UITapGestureRecognizer) {
-        if recognizer.state == .Ended {
+    private func updateUI() {
+        if faceView != nil {
             switch expression.eyes {
-            case .Open: expression.eyes = .Close
-            case .Close: expression.eyes = .Open
-            case .Squinting: break
+            case .Open: faceView.eyesOpen = true
+            case .Closed: faceView.eyesOpen = false
+            case .Squinting: faceView.eyesOpen = false
             }
+            faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
+            faceView.eyeBrowTilt = eyeBrowTitls[expression.eyeBrows] ?? 0.0
         }
     }
+
+    private var mouthCurvatures = [FacialExpression.Mouth.Frown:-1.0,.Grin:0.5,.Smile:1.0,.Smirk:-0.5,.Neutral:0.0]
+    private var eyeBrowTitls = [FacialExpression.EyeBrows.Relaxed:0.5,.Furrowed:-0.5, .Normal:0.0]
+
+    // MARK: Gesture Handlers
     func increaseHappiness() {
         expression.mouth = expression.mouth.happierMouth()
     }
@@ -52,18 +66,28 @@ class FaceViewController: UIViewController
         expression.mouth = expression.mouth.sadderMouth()
     }
     
-    private var mouthCurvatures = [FacialExpresion.Mouth.Frown:-1.0,.Grin:0.5,.Smile:1.0,.Smirk:-0.5,.Neutral:0.0]
-    private var eyeBrowTitls = [FacialExpresion.EyeBrows.Relaxed:0.5,.Furrowed:-0.5, .Normal:0.0]
-    
-    private func updateUI() {
-        switch expression.eyes {
-        case .Open: faceView.eyesOpen = true
-        case .Close: faceView.eyesOpen = false
-        case .Squinting: faceView.eyesOpen = false
+    @IBAction func toggleEyes(recognizer: UITapGestureRecognizer) {
+        if recognizer.state == .Ended {
+            switch expression.eyes {
+            case .Open: expression.eyes = .Closed
+            case .Closed: expression.eyes = .Open
+            case .Squinting: break
+            }
         }
-        faceView.mouthCurvature = mouthCurvatures[expression.mouth] ?? 0.0
-        faceView.eyeBrowTilt = eyeBrowTitls[expression.eyeBrows] ?? 0.0
     }
- 
-}
+    
+    func changeBrows(recognizer: UIRotationGestureRecognizer) {
+        switch recognizer.state {
+        case .Changed, .Ended:
+            if recognizer.rotation > CGFloat(M_PI/4) {
+                expression.eyeBrows = expression.eyeBrows.moreRelaxed()
+                recognizer.rotation = 0.0
+            } else if recognizer.rotation < -CGFloat(M_PI/4) {
+                expression.eyeBrows = expression.eyeBrows.moreFurrowed()
+                recognizer.rotation = 0.0
+            }
+        default: break
+        }
+    }
 
+}
