@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E52E24D1E48DE4200D5D9CD /* FacialExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52E24C1E48DE4200D5D9CD /* FacialExpression.swift */; };
 		3E94E2DC1E410B0300AFABD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E94E2DB1E410B0300AFABD8 /* AppDelegate.swift */; };
 		3E94E2DE1E410B0300AFABD8 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E94E2DD1E410B0300AFABD8 /* FaceViewController.swift */; };
 		3E94E2E11E410B0300AFABD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E94E2DF1E410B0300AFABD8 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E52E24C1E48DE4200D5D9CD /* FacialExpression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacialExpression.swift; path = ../FacialExpression.swift; sourceTree = "<group>"; };
 		3E94E2D81E410B0300AFABD8 /* Faceit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Faceit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E94E2DB1E410B0300AFABD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E94E2DD1E410B0300AFABD8 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				3E94E2DD1E410B0300AFABD8 /* FaceViewController.swift */,
 				3E94E2DF1E410B0300AFABD8 /* Main.storyboard */,
 				3E94E2EE1E410C4000AFABD8 /* FaceView.swift */,
+				3E52E24C1E48DE4200D5D9CD /* FacialExpression.swift */,
 				3E94E2ED1E410B3900AFABD8 /* Supporting Files */,
 			);
 			path = Faceit;
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E94E2DE1E410B0300AFABD8 /* FaceViewController.swift in Sources */,
+				3E52E24D1E48DE4200D5D9CD /* FacialExpression.swift in Sources */,
 				3E94E2DC1E410B0300AFABD8 /* AppDelegate.swift in Sources */,
 				3E94E2EF1E410C4000AFABD8 /* FaceView.swift in Sources */,
 			);
@@ -300,6 +304,7 @@
 				3E94E2EC1E410B0300AFABD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
